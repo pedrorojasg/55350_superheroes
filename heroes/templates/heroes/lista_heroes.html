@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+
+{% block titulo %}
+<title>Lista de heroes</title>
+{% endblock titulo %}
+
+{% block contenido %}
+<h3>Heroes:</h3>
+<a href="{% url 'crear_heroe' %}">Crear heroe</a>
+<br><br>
+
+<table class="table">
+  <tbody>
+    <tr>
+      <th>ID</th>
+      <th>Nombre</th>
+      <th>Nombre real</th>
+      <th>Residencia</th>
+      <th></th>
+    </tr>
+    {% for heroe in heroes %}
+    <tr>
+      <td>{{ heroe.id }}</td>
+      <td>{{ heroe.nombre }}</td>
+      <td>{{ heroe.nombre_real }}</td>
+      <td>{{ heroe.residencia }}</td>
+      {% comment %} <td>
+        <a class="btn btn-link" href="{% url 'editar_curso' heroe.id %}">editar</a>
+      </td> {% endcomment %}
+      <td>
+        <form action="{% url 'eliminar_heroe' heroe.id %}" method="post">
+          {% csrf_token %}
+          <input type="submit" class="btn btn-link" value="eliminar"/>
+        </form>
+      </td>
+    </tr>
+    {% endfor %}
+  </tbody>
+</table>
+
+{% endblock contenido %}
