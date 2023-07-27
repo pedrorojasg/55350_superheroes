@@ -17,6 +17,7 @@
       <th>Nombre real</th>
       <th>Residencia</th>
       <th></th>
+      <th></th>
     </tr>
     {% for heroe in heroes %}
     <tr>
@@ -24,9 +25,9 @@
       <td>{{ heroe.nombre }}</td>
       <td>{{ heroe.nombre_real }}</td>
       <td>{{ heroe.residencia }}</td>
-      {% comment %} <td>
-        <a class="btn btn-link" href="{% url 'editar_curso' heroe.id %}">editar</a>
-      </td> {% endcomment %}
+      <td>
+        <a class="btn btn-link" href="{% url 'editar_heroe' heroe.id %}">editar</a>
+      </td>
       <td>
         <form action="{% url 'eliminar_heroe' heroe.id %}" method="post">
           {% csrf_token %}

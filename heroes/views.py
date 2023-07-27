@@ -56,3 +56,31 @@ def crear_heroe(request):
         context={'formulario': formulario}
     )
     return http_response
+
+
+def editar_heroe(request, id):
+    heroe = Heroe.objects.get(id=id)
+    if request.method == "POST":
+        formulario = HeroeFormulario(request.POST)
+
+        if formulario.is_valid():
+            data = formulario.cleaned_data
+            heroe.nombre = data['nombre']
+            heroe.nombre_real = data['nombre_real']
+            heroe.residencia = data['residencia']
+            heroe.save()
+
+            url_exitosa = reverse('listar_heroes')
+            return redirect(url_exitosa)
+    else:  # GET
+        inicial = {
+            'nombre': heroe.nombre,
+            'nombre_real': heroe.nombre_real,
+            'residencia': heroe.residencia,
+        }
+        formulario = HeroeFormulario(initial=inicial)
+    return render(
+        request=request,
+        template_name='heroes/formulario_heroe.html',
+        context={'formulario': formulario},
+    )
